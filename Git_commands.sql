@@ -23,9 +23,9 @@ SHOW GIT BRANCHES IN advanced_data_engineering_snowflake;
 Note: In Snowsight... one repo object = 1 branch
 So... you cannot just switch to a different branch. Instead, you must create a new Git repo object like this...
 */
-CREATE OR REPLACE GIT REPOSITORY advanced_data_engineering_snowflake_feature
-  ORIGIN = 'https://github.com/bcpurkistraining/advanced-data-engineering-snowflake.git'
-  BRANCH = 'feature/git_documentation';
+-- CREATE OR REPLACE GIT REPOSITORY advanced_data_engineering_snowflake_feature
+--   ORIGIN = 'https://github.com/bcpurkistraining/advanced-data-engineering-snowflake.git'
+--   BRANCH = 'feature/git_documentation';
 
 
 
