@@ -11,7 +11,8 @@ CREATE TABLE staging_tasty_bytes.telemetry.data_quality_alerts (
 );
 
 -- Create a serverless alert with a schedule
-CREATE OR REPLACE ALERT order_data_quality_alert
+CREATE OR REPLACE ALERT staging_tasty_bytes.telemetry.order_data_quality_alert
+  -- WAREHOUSE = COMPUTE_WH  <-- NOT NEEDED SINCE ITS A SERVERLESS ALERT
   SCHEDULE = '30 MINUTE'
   IF (EXISTS (
     SELECT * FROM STAGING_TASTY_BYTES.RAW_POS.ORDER_HEADER 
@@ -33,17 +34,18 @@ CREATE OR REPLACE ALERT order_data_quality_alert
       AND ORDER_TS > DATEADD(hour, -6, CURRENT_TIMESTAMP());
         
       -- Call stored procedure for notification
-      -- CALL notify_data_quality_team();
+      CALL STAGING_TASTY_BYTES.RAW_POS.NOTIFY_DATA_QUALITY_TEAM();
+      -- CALL staging_tasty_bytes.raw_pos.notify_data_quality_team;
     END;
 
 -- Check alert status
-SHOW ALERTS LIKE 'order_data_quality_alert';
+SHOW ALERTS LIKE 'order_data_quality_alert' IN SCHEMA staging_tasty_bytes.telemetry;
 
 -- Start the alert
-ALTER ALERT order_data_quality_alert RESUME;
+ALTER ALERT staging_tasty_bytes.telemetry.order_data_quality_alert RESUME;
 
 -- Execute the alert
-EXECUTE ALERT order_data_quality_alert;
+EXECUTE ALERT staging_tasty_bytes.telemetry.order_data_quality_alert;
 
 -- Insert dummy data with missing ORDER_AMOUNT or ORDER_TOTAL
 INSERT INTO STAGING_TASTY_BYTES.RAW_POS.ORDER_HEADER (
@@ -82,4 +84,5 @@ USE SCHEMA TELEMETRY;
 SELECT * FROM data_quality_alerts;
 
 -- Suspend the alert
-ALTER ALERT order_data_quality_alert SUSPEND;
+ALTER ALERT staging_tasty_bytes.telemetry.order_data_quality_alert SUSPEND;
+
