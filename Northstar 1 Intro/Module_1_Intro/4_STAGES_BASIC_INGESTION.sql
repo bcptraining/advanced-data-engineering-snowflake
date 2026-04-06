@@ -325,4 +325,3 @@ SELECT file_name, error_count, status, last_load_time FROM snowflake.account_usa
   ORDER BY last_load_time DESC
   LIMIT 10;
 
-  select * from table()
