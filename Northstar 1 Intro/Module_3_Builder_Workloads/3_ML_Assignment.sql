@@ -1,3 +1,5 @@
+/* Note: Refer to the workspace notebook northstar_ml.ipynb for a working example of the code below. Yhe instruictor set this up for a Jupyter notebook and I did not want that */
+
 /* Code block for videos */
 # Note: This is not code you can run in a SQL worksheet. We ran this in a Jupyter notebook
 
